@@ -47,6 +47,8 @@ var radiosCategoria = document.querySelectorAll('input[name="categoria"]');
 var campoSubcat    = document.getElementById('subcategoria');
 var blocoDescricao = document.getElementById('bloco-descricao');
 var campoDescricao = document.getElementById('descricao');
+var marcaDescricao = document.getElementById('descricao-marca');
+var ajudaDescricao = document.getElementById('descricao-ajuda');
 var textoLocal     = document.getElementById('local-texto');
 var botaoPublicar  = document.getElementById('publicar');
 var faixaStatus    = document.getElementById('status');
@@ -135,8 +137,16 @@ function subcategoriaExigeDescricao() {
   return !!opcao && opcao.dataset.exigeDescricao === 'sim';
 }
 
+/* A descrição aparece sempre. O que muda é a exigência: em "Outro" ela
+   passa a ser obrigatória, e o rótulo avisa disso. */
 function atualizarDescricao() {
-  blocoDescricao.hidden = !subcategoriaExigeDescricao();
+  var obrigatoria = subcategoriaExigeDescricao();
+
+  marcaDescricao.textContent = obrigatoria ? '(obrigatória)' : '(opcional)';
+
+  ajudaDescricao.textContent = obrigatoria
+    ? 'Descreva o que você encontrou, já que o tipo escolhido é genérico.'
+    : 'Acrescente algo que ajude quem for ver o registro.';
 }
 
 campoSubcat.addEventListener('change', function () {

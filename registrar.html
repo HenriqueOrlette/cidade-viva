@@ -89,13 +89,16 @@
       </p>
     </div>
 
-    <!-- DESCRIÇÃO — aparece só quando o tipo é "Outro" -->
-    <div class="campo" id="bloco-descricao" hidden>
-      <label class="campo__rotulo" for="descricao">Descrição</label>
+    <!-- DESCRIÇÃO — sempre visível; obrigatória apenas quando o tipo é "Outro" -->
+    <div class="campo" id="bloco-descricao">
+      <label class="campo__rotulo" for="descricao">
+        Descrição
+        <span class="campo__marca" id="descricao-marca">(opcional)</span>
+      </label>
       <textarea class="campo__controle" id="descricao"
                 aria-describedby="descricao-ajuda"></textarea>
       <p class="campo__ajuda" id="descricao-ajuda">
-        Obrigatória quando o tipo é "Outro". Descreva o que você encontrou.
+        Acrescente algo que ajude quem for ver o registro.
       </p>
     </div>
 
