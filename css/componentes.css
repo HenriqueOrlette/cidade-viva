@@ -277,6 +277,10 @@
   gap: var(--e-1);
 }
 
+.campo[hidden] {
+  display: none;
+}
+
 .campo + .campo {
   margin-top: var(--e-4);
 }
@@ -396,39 +400,79 @@ textarea.campo__controle {
   text-align: center;
   cursor: pointer;
 }
-
+ 
 .foto__area svg {
   width: 32px;
   height: 32px;
 }
-
+ 
 /* Retorno de toque próprio: o realce padrão do navegador está
    desligado no base.css. */
 .foto__area:active {
   transform: scale(0.99);
   background: #EFEBDE;
 }
-
+ 
 /* O foco do teclado precisa ficar no label, já que o input está
    oculto — sem isso a navegação por Tab não mostraria nada. */
 .foto__campo:focus-visible + .foto__area {
   outline: 3px solid var(--foco);
   outline-offset: 2px;
 }
-
+ 
+/* ==========================================================================
+   PRÉVIA DA FOTOGRAFIA
+ 
+   Substitui a área tracejada depois que a pessoa escolhe a imagem.
+   object-fit: cover recorta sem distorcer — fotos de rua vêm em
+   proporções imprevisíveis.
+   ========================================================================== */
+ 
+.foto__previa {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border: 2px solid var(--texto-suave);
+  border-radius: var(--raio);
+  cursor: pointer;
+}
+ 
+.foto__previa[hidden] {
+  display: none;
+}
+ 
+ 
 /* ==========================================================================
    SELEÇÃO DE CATEGORIA (RF03)
-
-   Radio nativo escondido; o label inteiro vira o cartão clicável.
+ 
+   Radio nativo escondido; o label inteiro vira o cartão tocável.
    :has() troca a borda quando o rádio correspondente é marcado —
    dispensa JavaScript só para o estado visual.
    ========================================================================== */
-
+ 
+/* fieldset precisa de reset: o navegador lhe dá borda e recuo próprios.
+   display:block porque <legend> não se comporta de forma confiável
+   dentro de um contêiner flex. min-width:0 impede que o fieldset se
+   recuse a encolher junto com a coluna. */
+fieldset.campo {
+  display: block;
+  min-width: 0;
+  border: 0;
+  padding: 0;
+  margin-inline: 0;
+}
+ 
+fieldset.campo .campo__rotulo {
+  display: block;
+  padding: 0;
+  margin-bottom: var(--e-1);
+}
+ 
 .categoria__opcoes {
   display: flex;
   gap: var(--e-3);
 }
-
+ 
 .categoria__cartao {
   flex: 1;
   display: flex;
@@ -441,43 +485,118 @@ textarea.campo__controle {
   border-radius: var(--raio);
   cursor: pointer;
 }
-
+ 
 .categoria__forma {
   width: 40px;
   height: 40px;
+  flex-shrink: 0;
 }
-
+ 
 .categoria__forma--hostil {
   background: var(--hostil);
   transform: rotate(45deg);
   border-radius: 4px;
 }
-
+ 
 .categoria__forma--hospitaleiro {
   background: var(--hospitaleiro);
   border-radius: 50%;
 }
-
+ 
 .categoria__rotulo {
   font-weight: 600;
   font-size: 0.9375rem;
 }
-
+ 
 /* Estado selecionado: borda mais grossa, na cor da categoria — reforço,
    nunca a única pista de qual está ativa. */
 .categoria__cartao--hostil:has(.categoria__input:checked) {
   border-width: 3px;
   border-color: var(--hostil);
 }
-
+ 
 .categoria__cartao--hospitaleiro:has(.categoria__input:checked) {
   border-width: 3px;
   border-color: var(--hospitaleiro);
 }
-
-/* Como o input fica oculto, o anel de foco do teclado precisa
-   aparecer no cartão inteiro, não em um elemento invisível. */
+ 
+/* Como o input fica oculto, o anel de foco do teclado precisa aparecer
+   no cartão inteiro, não num elemento invisível. */
 .categoria__cartao:has(.categoria__input:focus-visible) {
   outline: 3px solid var(--foco);
   outline-offset: 2px;
+}
+ 
+.categoria__cartao:active {
+  transform: scale(0.98);
+}
+ 
+ 
+/* ==========================================================================
+   LOCALIZAÇÃO (RF02 / RF07)
+ 
+   Faixa informativa: mostra o andamento da captura e, quando o Nominatim
+   responde, o endereço legível.
+   ========================================================================== */
+ 
+.local {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+  min-height: var(--toque);
+  padding: var(--e-2) var(--e-3);
+  background: var(--creme);
+  border: 2px solid var(--texto-suave);
+  border-radius: var(--raio);
+}
+ 
+.local__icone {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--verde);
+}
+ 
+.local__texto {
+  font-size: 0.9375rem;
+  line-height: 1.35;
+}
+ 
+ 
+/* ==========================================================================
+   AVISO (RN01)
+ 
+   Barra lateral amarela em vez de fundo amarelo: o amarelo tem apenas
+   1.65:1 sobre o creme e não serve como área de leitura. Como faixa
+   sólida ao lado do texto escuro, chama atenção sem prejudicar o
+   contraste.
+   ========================================================================== */
+ 
+.aviso {
+  margin-top: var(--e-5);
+  padding: var(--e-3);
+  padding-left: var(--e-4);
+  border-left: 6px solid var(--amarelo);
+  background: #F2EDE0;
+  border-radius: var(--raio);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+ 
+ 
+/* ==========================================================================
+   AÇÕES DO FORMULÁRIO
+   ========================================================================== */
+ 
+.acoes {
+  margin-top: var(--e-4);
+}
+ 
+/* Dentro do formulário a faixa de status entra no fluxo da página, em vez
+   de flutuar sobre o conteúdo como acontece no mapa. */
+.conteudo .faixa-status {
+  position: static;
+  transform: none;
+  max-width: none;
+  margin-top: var(--e-3);
 }
