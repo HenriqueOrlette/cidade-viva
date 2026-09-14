@@ -1,0 +1,204 @@
+/* ==========================================================================
+   Cidade Viva — Base
+
+   Carregar DEPOIS de tokens.css.
+
+   Projeto mobile. As medidas são calibradas para telas de 320 a 430px
+   de largura; em telas maiores a interface apenas centraliza, sem se
+   espalhar.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. RESET
+   ========================================================================== */
+
+/* border-box faz padding e borda caberem DENTRO da largura declarada.
+   Sem isso, um elemento com width:100% e padding:16px fica maior que a
+   tela e causa rolagem horizontal — problema grave em celular. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body, h1, h2, h3, h4, p, figure, blockquote, dl, dd, ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img, picture, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+/* Campos não herdam a fonte do documento por padrão: sem esta regra um
+   <input> aparece em Arial mesmo com Archivo definida no body. */
+input, button, textarea, select {
+  font: inherit;
+  color: inherit;
+}
+
+
+/* ==========================================================================
+   2. COMPORTAMENTO MOBILE
+
+   As regras desta seção tratam de problemas que só aparecem no celular.
+   ========================================================================== */
+
+html {
+  /* Respeita o tamanho de fonte configurado pela pessoa no navegador.
+     Fixar em 16px aqui quebraria essa preferência. */
+  font-size: 100%;
+
+  /* O iOS aumenta o texto sozinho ao girar o aparelho para paisagem.
+     Esta regra desliga esse ajuste automático. */
+  -webkit-text-size-adjust: 100%;
+
+  /* Impede que arrastar além do topo dispare o "puxar para atualizar",
+     que recarregaria a página no meio de um arrasto do mapa. */
+  overscroll-behavior-y: none;
+}
+
+body {
+  font-family: var(--fonte-texto);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--texto);
+  background: var(--fundo-externo);
+  -webkit-font-smoothing: antialiased;
+
+  /* Ao tocar num botão, Android e iOS pintam um retângulo cinza por
+     cima. Ele ignora os cantos do elemento e fica feio. Desligamos
+     aqui e damos retorno próprio no :active de cada componente. */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Coluna do aplicativo.
+
+   100dvh em vez de 100vh: no celular a barra de endereço aparece e
+   some conforme a rolagem, mudando a altura visível. vh usa a altura
+   máxima e ignora essa variação, o que empurra o rodapé para fora da
+   tela. dvh acompanha a mudança em tempo real. */
+.app {
+  width: 100%;
+  max-width: var(--largura-app);
+  min-height: 100dvh;
+  margin: 0 auto;
+  background: var(--creme);
+  position: relative;
+
+  /* Reserva o espaço do notch e da barra inferior do iPhone. O segundo
+     argumento é o valor usado quando não há área reservada — em
+     aparelhos sem notch e em navegadores antigos. Exige
+     viewport-fit=cover na meta viewport do HTML. */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Campos de formulário: o Safari do iOS dá zoom automático na tela
+   quando a pessoa toca num campo com fonte menor que 16px. Depois é
+   preciso dar pinch para voltar. Fixar 16px evita isso. */
+input, select, textarea {
+  font-size: 16px;
+}
+
+
+/* ==========================================================================
+   3. TIPOGRAFIA
+
+   Escala calibrada para leitura a uma mão, em tela de celular. Os
+   tamanhos são fixos porque a coluna tem largura máxima: não há razão
+   para o título crescer numa tela larga se a coluna não cresce.
+   ========================================================================== */
+
+/* Anton tem um único peso: pedir 700 faria o navegador simular negrito
+   e borrar o traço. line-height apertado porque a fonte é condensada
+   e alta. */
+h1, h2, h3 {
+  font-family: var(--fonte-titulo);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+h1 { font-size: 2rem; }     /* 32px */
+h2 { font-size: 1.5rem; }   /* 24px */
+h3 { font-size: 1.125rem; } /* 18px */
+
+p + p {
+  margin-top: var(--e-3);
+}
+
+a {
+  color: var(--verde);
+  text-underline-offset: 0.2em;
+}
+
+strong {
+  font-weight: 600;
+}
+
+
+/* ==========================================================================
+   4. ACESSIBILIDADE
+   ========================================================================== */
+
+/* :focus-visible aparece na navegação por teclado, mas não ao tocar na
+   tela — indicador forte onde importa, sem poluir o uso por toque. */
+:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+.superficie-escura :focus-visible {
+  outline-color: var(--foco-inv);
+}
+
+/* Esconde visualmente, mas mantém o texto disponível para leitores de
+   tela. display:none removeria o conteúdo também para quem usa leitor. */
+.oculto-visual {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pular-conteudo {
+  position: absolute;
+  top: -100px;
+  left: var(--e-2);
+  z-index: 2000;
+  padding: var(--e-3) var(--e-4);
+  background: var(--texto);
+  color: var(--texto-inv);
+  border-radius: var(--raio);
+  text-decoration: none;
+}
+
+.pular-conteudo:focus {
+  top: var(--e-2);
+}
+
+/* Respeita quem configurou o sistema para reduzir animações, seja por
+   preferência, seja por sensibilidade a movimento. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
