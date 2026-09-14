@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>Cidade Viva — mapear</title>
+  <meta name="theme-color" content="#F7F4EC">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/componentes.css">
+</head>
+<body>
+
+<div class="app">
+
+  <header class="cabecalho">
+    <h1>Mapear</h1>
+    <p class="cabecalho__apoio">Mostre o que você encontrou na rua.</p>
+  </header>
+
+  <main class="conteudo">
+
+    <div class="campo">
+      <span class="campo__rotulo" id="rotulo-foto">Fotografia</span>
+
+      <!-- Sem o atributo capture: ele abriria a câmera direto e tiraria
+           a opção da galeria, que o RF01 também exige. -->
+      <input class="foto__campo oculto-visual" type="file" id="foto"
+             accept="image/*" aria-describedby="foto-ajuda">
+
+      <label class="foto__area" for="foto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Z"/>
+          <circle cx="12" cy="13" r="3.5"/>
+        </svg>
+        Tirar foto ou escolher da galeria
+      </label>
+
+      <p class="campo__ajuda" id="foto-ajuda">Obrigatória para publicar.</p>
+    </div>
+
+  </main>
+
+  <nav class="barra" aria-label="Navegação principal">
+
+    <a class="barra__item" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/>
+      </svg>
+      Mapa
+    </a>
+
+    <a class="barra__item barra__item--destaque" href="registrar.html" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+      Mapear
+    </a>
+
+    <a class="barra__item" href="aprender.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5Z"/><path d="M8 7h7M8 11h7"/>
+      </svg>
+      Aprender
+    </a>
+
+  </nav>
+
+</div>
+
+</body>
+</html>

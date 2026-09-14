@@ -337,3 +337,81 @@ textarea.campo__controle {
   font-weight: 600;
   color: var(--hostil);
 }
+
+/* ==========================================================================
+   CABEÇALHO DE TELA
+   ========================================================================== */
+
+.cabecalho {
+  padding: var(--e-5) var(--e-4) var(--e-4);
+}
+
+.cabecalho__apoio {
+  margin-top: var(--e-1);
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+
+/* ==========================================================================
+   CONTEÚDO ROLÁVEL
+
+   Telas de formulário rolam (ao contrário do mapa). A barra precisa
+   acompanhar a rolagem, por isso o sticky — escopado para não alterar
+   o comportamento da tela do mapa, que usa .app--fixo.
+   ========================================================================== */
+
+.conteudo {
+  padding: 0 var(--e-4) var(--e-6);
+}
+
+.app:not(.app--fixo) .barra {
+  position: sticky;
+  bottom: 0;
+}
+
+
+/* ==========================================================================
+   CAMPO DE FOTOGRAFIA (RF01)
+
+   O <input type="file"> real fica oculto; o <label> é a área visível.
+   Borda tracejada para indicar espaço a preencher, e não campo já
+   preenchido.
+   ========================================================================== */
+
+.foto__area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-2);
+  min-height: 176px;
+  padding: var(--e-4);
+  background: var(--creme);
+  border: 2px dashed var(--texto-suave);
+  border-radius: var(--raio);
+  color: var(--texto-suave);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+}
+
+.foto__area svg {
+  width: 32px;
+  height: 32px;
+}
+
+/* Retorno de toque próprio: o realce padrão do navegador está
+   desligado no base.css. */
+.foto__area:active {
+  transform: scale(0.99);
+  background: #EFEBDE;
+}
+
+/* O foco do teclado precisa ficar no label, já que o input está
+   oculto — sem isso a navegação por Tab não mostraria nada. */
+.foto__campo:focus-visible + .foto__area {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
