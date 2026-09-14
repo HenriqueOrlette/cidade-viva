@@ -1,0 +1,339 @@
+/* ==========================================================================
+   Cidade Viva — Componentes
+
+   Peças reutilizáveis por várias telas: barra de navegação, legenda,
+   marcadores e faixa de status.
+
+   Carregar DEPOIS de tokens.css e base.css.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   TELA SEM ROLAGEM
+
+   Telas como a do mapa ocupam exatamente a altura da janela e não
+   rolam. A coluna vira um flex vertical: o conteúdo principal estica,
+   a barra fica embaixo com altura própria.
+   ========================================================================== */
+
+.app--fixo {
+  height: 100dvh;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+
+/* ==========================================================================
+   MAPA
+   ========================================================================== */
+
+/* flex:1 faz o mapa ocupar toda a sobra vertical.
+   min-height:0 é necessário porque, dentro de um flex, o tamanho
+   mínimo padrão é o do conteúdo — sem isso o mapa empurraria a barra
+   para fora da tela. */
+.mapa-area {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+#mapa {
+  width: 100%;
+  height: 100%;
+  background: #DCDCD2;
+}
+
+
+/* ==========================================================================
+   LEGENDA
+
+   z-index acima do mapa: o Leaflet usa valores até 400 nas suas
+   camadas, então 500 garante que a legenda fique por cima.
+   ========================================================================== */
+
+.legenda {
+  position: absolute;
+  top: var(--e-3);
+  left: var(--e-3);
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-1);
+  padding: var(--e-2) var(--e-3);
+  background: rgba(247, 244, 236, 0.95);
+  border-radius: var(--raio);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.legenda__item {
+  display: flex;
+  align-items: center;
+  gap: var(--e-2);
+}
+
+/* Os símbolos repetem as formas dos marcadores do mapa. A forma é o
+   canal principal de distinção entre as categorias; a cor reforça. */
+.legenda__forma {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.legenda__forma--hostil {
+  background: var(--hostil);
+  transform: rotate(45deg);
+  border-radius: 1px;
+}
+
+.legenda__forma--hospitaleiro {
+  background: var(--hospitaleiro);
+  border-radius: 50%;
+}
+
+
+/* ==========================================================================
+   MARCADORES
+
+   Aplicados pelo Leaflet dentro de um divIcon. O contorno creme
+   separa o marcador do mapa, que tem cores imprevisíveis.
+   ========================================================================== */
+
+.marcador {
+  width: 26px;
+  height: 26px;
+  border: 3px solid var(--creme);
+}
+
+.marcador--hostil {
+  background: var(--hostil);
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+
+.marcador--hospitaleiro {
+  background: var(--hospitaleiro);
+  border-radius: 50%;
+}
+
+
+/* ==========================================================================
+   BARRA INFERIOR
+
+   Fica na base porque o app é usado de pé, na rua, com uma das mãos:
+   é a região que o polegar alcança sem reposicionar o aparelho.
+   ========================================================================== */
+
+.barra {
+  display: flex;
+  gap: var(--e-2);
+  padding: var(--e-2);
+  background: var(--creme);
+  border-top: 1px solid #DAD5C6;
+
+  /* Espaço extra embaixo, para a barra de gestos do iPhone não cobrir
+     os botões. Em aparelhos sem essa área, resolve para zero. */
+  padding-bottom: calc(var(--e-2) + env(safe-area-inset-bottom, 0px));
+}
+
+.barra__item {
+  flex: 1;
+  min-height: var(--toque);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--e-1);
+
+  border: none;
+  background: none;
+  border-radius: var(--raio);
+  font-family: var(--fonte-texto);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.barra__item svg {
+  width: 21px;
+  height: 21px;
+}
+
+/* aria-current="page" marca a tela atual. Estilizar a partir do
+   atributo, em vez de uma classe extra, mantém o visual e a
+   informação para leitores de tela sempre em sincronia. */
+.barra__item[aria-current="page"] {
+  color: var(--texto);
+}
+
+/* O item principal. Proporção maior que os demais para receber o
+   polegar com folga. */
+.barra__item--destaque {
+  flex: 1.25;
+  background: var(--verde);
+  color: var(--texto-inv);
+}
+
+/* Como desligamos o realce cinza padrão do toque no base.css, cada
+   elemento tocável precisa do próprio retorno visual. Sem isso a
+   pessoa toca e nada acontece até a tela trocar. */
+.barra__item:active {
+  transform: scale(0.97);
+}
+
+.barra__item:not(.barra__item--destaque):active {
+  background: #EBE6D8;
+}
+
+
+/* ==========================================================================
+   FAIXA DE STATUS
+
+   Mensagem curta sobre o mapa: carregando, vazio, erro.
+   ========================================================================== */
+
+.faixa-status {
+  position: absolute;
+  top: var(--e-3);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 600;
+  max-width: calc(100% - var(--e-6));
+  padding: var(--e-2) var(--e-4);
+  background: var(--texto);
+  color: var(--texto-inv);
+  border-radius: var(--raio);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.faixa-status[hidden] {
+  display: none;
+}
+
+/* ==========================================================================
+   BOTÕES
+
+   Base para os formulários (registrar, login, cadastro). O botão
+   primário reforça a ação principal da tela; o secundário serve para
+   ações de menor peso, como "cancelar" ou "já tenho conta".
+   ========================================================================== */
+
+.botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: var(--toque);
+  padding: var(--e-2) var(--e-4);
+  border-radius: var(--raio);
+  border: 2px solid transparent;
+  font-family: var(--fonte-texto);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.botao--primario {
+  background: var(--verde);
+  border-color: var(--verde);
+  color: var(--texto-inv);
+}
+
+.botao--secundario {
+  background: transparent;
+  border-color: var(--verde);
+  color: var(--verde);
+}
+
+/* Mesmo retorno de toque já usado na barra inferior — sem ele, a
+   pessoa toca e não sente nenhuma resposta, já que o realce padrão
+   do navegador está desligado no base.css. */
+.botao:active {
+  transform: scale(0.97);
+}
+
+.botao:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ==========================================================================
+   CAMPOS DE FORMULÁRIO
+
+   Usados em registrar, login e cadastro. Rótulo sempre visível acima do
+   campo: placeholder some ao digitar e não substitui rótulo.
+   ========================================================================== */
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-1);
+}
+
+.campo + .campo {
+  margin-top: var(--e-4);
+}
+
+.campo__rotulo {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--texto);
+}
+
+/* Mesma caixa para input, select e textarea. O tamanho da fonte já vem
+   de base.css (16px, para o iOS não dar zoom ao tocar no campo). */
+.campo__controle {
+  width: 100%;
+  min-height: var(--toque);
+  padding: var(--e-2) var(--e-3);
+  background: var(--creme);
+  border: 2px solid var(--texto-suave);
+  border-radius: var(--raio);
+  color: var(--texto);
+}
+
+/* :focus, e não :focus-visible como no resto do app: num campo de
+   texto a pessoa precisa enxergar onde digita mesmo sem teclado. */
+.campo__controle:focus {
+  outline: 3px solid var(--foco);
+  outline-offset: 1px;
+  border-color: var(--texto);
+}
+
+.campo__controle:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* textarea nasce com altura de uma linha só; aqui recebe espaço para
+   algumas. resize vertical para não estourar a largura da coluna. */
+textarea.campo__controle {
+  min-height: 96px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+/* Dica opcional abaixo do campo. */
+.campo__ajuda {
+  font-size: 0.8125rem;
+  color: var(--texto-suave);
+}
+
+/* Erro: a borda engrossa E a mensagem aparece em texto. A cor sozinha
+   nunca carrega a informação. */
+.campo--erro .campo__controle {
+  border-color: var(--hostil);
+}
+
+.campo__erro {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--hostil);
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- viewport-fit=cover libera a área do notch para o app desenhar.
+       Sem isso, o env(safe-area-inset-*) do CSS sempre devolve zero. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>Cidade Viva — mapa</title>
+  <meta name="description" content="Mapeamento colaborativo de arquitetura hostil e espaços hospitaleiros.">
+  <meta name="theme-color" content="#F7F4EC">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+  <!-- Ordem importa: tokens define as variáveis, base as consome,
+       componentes depende das duas. -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/componentes.css">
+</head>
+<body>
+
+<div class="app app--fixo">
+
+  <h1 class="oculto-visual">Mapa de registros</h1>
+
+  <div class="mapa-area">
+
+    <!-- role="application" avisa ao leitor de tela que este bloco tem
+         interação própria, e que as setas do teclado pertencem a ele. -->
+    <div id="mapa" role="application" aria-label="Mapa com os registros publicados"></div>
+
+    <div class="legenda">
+      <span class="legenda__item">
+        <span class="legenda__forma legenda__forma--hostil" aria-hidden="true"></span>
+        hostil
+      </span>
+      <span class="legenda__item">
+        <span class="legenda__forma legenda__forma--hospitaleiro" aria-hidden="true"></span>
+        acolhedor
+      </span>
+    </div>
+
+    <!-- aria-live="polite" faz o leitor de tela anunciar a mensagem
+         quando ela mudar, sem interromper o que estiver sendo lido. -->
+    <p class="faixa-status" id="status" role="status" aria-live="polite" hidden></p>
+
+  </div>
+
+  <nav class="barra" aria-label="Navegação principal">
+
+    <a class="barra__item" href="index.html" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/>
+      </svg>
+      Mapa
+    </a>
+
+    <a class="barra__item barra__item--destaque" href="registrar.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+      Mapear
+    </a>
+
+    <a class="barra__item" href="aprender.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5Z"/><path d="M8 7h7M8 11h7"/>
+      </svg>
+      Aprender
+    </a>
+
+  </nav>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="js/mapa.js"></script>
+
+</body>
+</html>
