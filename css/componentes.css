@@ -415,3 +415,69 @@ textarea.campo__controle {
   outline: 3px solid var(--foco);
   outline-offset: 2px;
 }
+
+/* ==========================================================================
+   SELEÇÃO DE CATEGORIA (RF03)
+
+   Radio nativo escondido; o label inteiro vira o cartão clicável.
+   :has() troca a borda quando o rádio correspondente é marcado —
+   dispensa JavaScript só para o estado visual.
+   ========================================================================== */
+
+.categoria__opcoes {
+  display: flex;
+  gap: var(--e-3);
+}
+
+.categoria__cartao {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--e-2);
+  padding: var(--e-4) var(--e-3);
+  background: var(--creme);
+  border: 2px solid var(--texto-suave);
+  border-radius: var(--raio);
+  cursor: pointer;
+}
+
+.categoria__forma {
+  width: 40px;
+  height: 40px;
+}
+
+.categoria__forma--hostil {
+  background: var(--hostil);
+  transform: rotate(45deg);
+  border-radius: 4px;
+}
+
+.categoria__forma--hospitaleiro {
+  background: var(--hospitaleiro);
+  border-radius: 50%;
+}
+
+.categoria__rotulo {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+/* Estado selecionado: borda mais grossa, na cor da categoria — reforço,
+   nunca a única pista de qual está ativa. */
+.categoria__cartao--hostil:has(.categoria__input:checked) {
+  border-width: 3px;
+  border-color: var(--hostil);
+}
+
+.categoria__cartao--hospitaleiro:has(.categoria__input:checked) {
+  border-width: 3px;
+  border-color: var(--hospitaleiro);
+}
+
+/* Como o input fica oculto, o anel de foco do teclado precisa
+   aparecer no cartão inteiro, não em um elemento invisível. */
+.categoria__cartao:has(.categoria__input:focus-visible) {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}

@@ -26,15 +26,16 @@
 
   <main class="conteudo">
 
+    <!-- FOTOGRAFIA (RF01) -->
     <div class="campo">
-      <span class="campo__rotulo" id="rotulo-foto">Fotografia</span>
+      <span class="campo__rotulo">Fotografia</span>
 
       <!-- Sem o atributo capture: ele abriria a câmera direto e tiraria
            a opção da galeria, que o RF01 também exige. -->
       <input class="foto__campo oculto-visual" type="file" id="foto"
              accept="image/*" aria-describedby="foto-ajuda">
 
-      <label class="foto__area" for="foto">
+      <label class="foto__area" id="foto-area" for="foto">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8Z"/>
           <circle cx="12" cy="13" r="3.5"/>
@@ -42,8 +43,94 @@
         Tirar foto ou escolher da galeria
       </label>
 
+      <!-- A prévia substitui a área tracejada depois da escolha.
+           Tocar nela abre o seletor de novo, para trocar a foto. -->
+      <img class="foto__previa" id="foto-previa" alt="Prévia da fotografia escolhida"
+           hidden onclick="document.getElementById('foto').click()">
+
       <p class="campo__ajuda" id="foto-ajuda">Obrigatória para publicar.</p>
     </div>
+
+    <!-- CATEGORIA (RF03) -->
+    <fieldset class="campo">
+      <legend class="campo__rotulo">Categoria</legend>
+
+      <div class="categoria__opcoes">
+
+        <label class="categoria__cartao categoria__cartao--hostil">
+          <input class="categoria__input oculto-visual" type="radio"
+                 name="categoria" value="HOSTIL">
+          <span class="categoria__forma categoria__forma--hostil" aria-hidden="true"></span>
+          <span class="categoria__rotulo">Hostil</span>
+        </label>
+
+        <label class="categoria__cartao categoria__cartao--hospitaleiro">
+          <input class="categoria__input oculto-visual" type="radio"
+                 name="categoria" value="HOSPITALEIRO">
+          <span class="categoria__forma categoria__forma--hospitaleiro" aria-hidden="true"></span>
+          <span class="categoria__rotulo">Acolhedor</span>
+        </label>
+
+      </div>
+    </fieldset>
+
+    <!-- SUBCATEGORIA (RF04 / RN03) -->
+    <div class="campo">
+      <label class="campo__rotulo" for="subcategoria">Tipo</label>
+
+      <!-- Nasce desabilitado: a lista só existe depois da categoria. -->
+      <select class="campo__controle" id="subcategoria" disabled
+              aria-describedby="subcategoria-ajuda">
+        <option value="">Escolha a categoria primeiro</option>
+      </select>
+
+      <p class="campo__ajuda" id="subcategoria-ajuda">
+        As opções mudam conforme a categoria escolhida.
+      </p>
+    </div>
+
+    <!-- DESCRIÇÃO — aparece só quando o tipo é "Outro" -->
+    <div class="campo" id="bloco-descricao" hidden>
+      <label class="campo__rotulo" for="descricao">Descrição</label>
+      <textarea class="campo__controle" id="descricao"
+                aria-describedby="descricao-ajuda"></textarea>
+      <p class="campo__ajuda" id="descricao-ajuda">
+        Obrigatória quando o tipo é "Outro". Descreva o que você encontrou.
+      </p>
+    </div>
+
+    <!-- LOCALIZAÇÃO (RF02 / RF07) -->
+    <div class="campo">
+      <span class="campo__rotulo">Localização</span>
+
+      <div class="local">
+        <svg class="local__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" aria-hidden="true">
+          <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/>
+          <circle cx="12" cy="10" r="2.6"/>
+        </svg>
+
+        <!-- aria-live: o leitor de tela anuncia quando o texto mudar,
+             sem interromper o que estiver sendo lido. -->
+        <p class="local__texto" id="local-texto" role="status" aria-live="polite">
+          Procurando sua localização…
+        </p>
+      </div>
+    </div>
+
+    <!-- AVISO (RN01) -->
+    <p class="aviso">
+      Antes de publicar: não fotografe pessoas de forma identificável.
+      O mapa registra o espaço, não quem está nele.
+    </p>
+
+    <div class="acoes">
+      <button class="botao botao--primario" id="publicar" type="button" disabled>
+        Publicar no mapa
+      </button>
+    </div>
+
+    <p class="faixa-status" id="status" role="status" aria-live="polite" hidden></p>
 
   </main>
 
@@ -73,6 +160,8 @@
   </nav>
 
 </div>
+
+<script src="js/registrar.js"></script>
 
 </body>
 </html>
