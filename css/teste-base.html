@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Teste da base — Cidade Viva</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+
+  <style>
+    /* Estilos só desta página de teste. Não fazem parte do app. */
+    .area { padding: var(--e-4); }
+    .bloco { margin-bottom: var(--e-7); }
+    .rotulo {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--texto-suave);
+      margin-bottom: var(--e-3);
+    }
+    .amostras { display: flex; flex-wrap: wrap; gap: var(--e-2); }
+    .amostra {
+      width: 76px; height: 68px; border-radius: var(--raio);
+      display: flex; align-items: flex-end; padding: var(--e-1);
+      font-size: 0.65rem; font-weight: 600;
+    }
+    .escuro {
+      background: var(--carvao); color: var(--texto-inv);
+      padding: var(--e-5); border-radius: var(--raio);
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="area" id="conteudo">
+
+    <div class="bloco">
+      <p class="rotulo">Escala tipográfica</p>
+      <h1>A cidade é de quem anda nela</h1>
+      <h2>Ninguém mapeou seu bairro ainda</h2>
+      <h3>O que conta como arquitetura hostil</h3>
+      <p>Texto corrido em Archivo. Este parágrafo existe para verificar a
+        altura de linha, a largura máxima de leitura e a cor do texto sobre
+        o fundo creme. A linha deve quebrar por volta de 65 caracteres.</p>
+      <p>Segundo parágrafo, para conferir o espaçamento entre eles e o
+        estilo de <a href="#">um link dentro do texto</a>.</p>
+    </div>
+
+    <div class="bloco">
+      <p class="rotulo">Cores sobre fundo claro</p>
+      <div class="amostras">
+        <div class="amostra" style="background:var(--verde);color:var(--texto-inv)">verde</div>
+        <div class="amostra" style="background:var(--amarelo);color:var(--texto)">amarelo</div>
+        <div class="amostra" style="background:var(--hostil);color:var(--texto-inv)">hostil</div>
+        <div class="amostra" style="background:var(--hospitaleiro);color:var(--texto-inv)">hospital.</div>
+        <div class="amostra" style="background:var(--texto);color:var(--texto-inv)">texto</div>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <p class="rotulo">Formas dos marcadores</p>
+      <div style="display:flex;align-items:center;gap:var(--e-5)">
+        <span style="display:flex;align-items:center;gap:var(--e-2)">
+          <span style="width:26px;height:26px;background:var(--hostil);transform:rotate(45deg);border-radius:2px;border:3px solid var(--creme)"></span>
+          hostil
+        </span>
+        <span style="display:flex;align-items:center;gap:var(--e-2)">
+          <span style="width:26px;height:26px;background:var(--hospitaleiro);border-radius:50%;border:3px solid var(--creme)"></span>
+          hospitaleiro
+        </span>
+      </div>
+    </div>
+
+    <div class="bloco">
+      <p class="rotulo">Teste de foco — navegue com a tecla Tab</p>
+      <div style="display:flex;gap:var(--e-3);flex-wrap:wrap">
+        <button style="min-height:var(--toque);padding:0 var(--e-5);background:var(--verde);color:var(--texto-inv);border:none;border-radius:var(--raio);font-weight:600">Mapear agora</button>
+        <button style="min-height:var(--toque);padding:0 var(--e-5);background:transparent;color:var(--texto);border:2px solid var(--texto);border-radius:var(--raio);font-weight:600">Cancelar</button>
+      </div>
+    </div>
+
+    <div class="bloco escuro superficie-escura">
+      <p class="rotulo" style="color:var(--texto-inv-suave)">Superfície escura — hub educativo</p>
+      <h2 style="color:var(--texto-inv)">O que a cidade faz com quem não tem pra onde ir</h2>
+      <p style="color:var(--texto-inv-suave)">Texto secundário sobre fundo escuro. As cores das categorias mudam aqui: as versões do fundo claro ficariam ilegíveis.</p>
+      <div style="display:flex;align-items:center;gap:var(--e-5);margin-top:var(--e-4)">
+        <span style="display:flex;align-items:center;gap:var(--e-2);color:var(--hostil-inv)">
+          <span style="width:22px;height:22px;background:var(--hostil-inv);transform:rotate(45deg);border-radius:2px"></span>
+          hostil
+        </span>
+        <span style="display:flex;align-items:center;gap:var(--e-2);color:var(--hospitaleiro-inv)">
+          <span style="width:22px;height:22px;background:var(--hospitaleiro-inv);border-radius:50%"></span>
+          hospitaleiro
+        </span>
+      </div>
+      <button style="min-height:var(--toque);padding:0 var(--e-5);margin-top:var(--e-4);background:var(--amarelo);color:var(--texto);border:none;border-radius:var(--raio);font-weight:600">Botão no fundo escuro</button>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
