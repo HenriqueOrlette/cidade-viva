@@ -1,0 +1,69 @@
+/* ==========================================================================
+   Cidade Viva — Tokens de design
+
+   Todos os valores deste arquivo foram verificados no padrão WCAG.
+
+   Regra geral: nada de cor solta no resto do CSS. Todo componente lê
+   destas variáveis. Mudar uma cor aqui muda o app inteiro.
+   ========================================================================== */
+
+:root {
+
+  /*FUNDOS*/
+  --creme: #F7F4EC;
+  --carvao: #16181A;
+  --fundo-externo: #E4DFD2;
+
+  /*TEXTO*/
+  --texto: #16181A;           
+  --texto-suave: #3A3E44;  
+
+  --texto-inv: #F7F4EC;       
+  --texto-inv-suave: #B8BCC2;  
+
+  /*MARCA*/
+  --verde: #1B4D3E;           
+  --amarelo: #F2B705;         
+
+  /*CATEGORIAS*/
+  --hostil: #A8123C;           
+  --hospitaleiro: #2E9E6B;     
+
+  /* Variantes para o fundo escuro do hub.*/
+  --hostil-inv: #F58AA6;      
+  --hospitaleiro-inv: #5FD4A3; 
+
+  /*FOCO DO TECLADO*/
+  --foco: #16181A;            
+  --foco-inv: #F2B705;        
+
+
+  /*TIPOGRAFIA*/
+  /*Anton: usada só em títulos.*/
+  --fonte-titulo: "Anton", "Archivo", system-ui, sans-serif;
+
+  /* Archivo: texto corrido, botões, rótulos. */
+  --fonte-texto: "Archivo", system-ui, -apple-system, sans-serif;
+
+  /*ESPAÇAMENTO*/
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 24px;
+  --e-6: 32px;
+  --e-7: 48px;
+
+  /*FORMA E MEDIDAS*/
+  /*Arredondamento dos cantos.*/
+  --raio: 4px;
+
+  /* Altura mínima de qualquer elemento tocável.*/
+  --toque: 48px;
+
+  /* Altura da barra de navegação inferior.*/
+  --barra: 76px;
+
+  /* Largura máxima da coluna do app.*/
+  --largura-app: 460px;
+}
