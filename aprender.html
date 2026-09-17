@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>Cidade Viva — aprender</title>
+  <meta name="description" content="Como reconhecer arquitetura hostil e hospitalidade urbana.">
+
+  <!-- Esta tela inverte o fundo, então a cor da barra do navegador
+       acompanha: carvão, e não o creme das outras telas. -->
+  <meta name="theme-color" content="#16181A">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/componentes.css">
+</head>
+<body>
+
+<!-- superficie-escura: o base.css usa esta classe para trocar a cor do
+     anel de foco do teclado, que no escuro precisa ser o amarelo. -->
+<div class="app app--escuro superficie-escura">
+
+  <header class="cabecalho">
+    <h1>O que a cidade faz com quem não tem pra onde ir</h1>
+    <p class="cabecalho__apoio cabecalho__apoio--inv">
+      Reconhecer é o primeiro passo para mapear.
+    </p>
+  </header>
+
+  <main class="conteudo">
+
+    <!-- ================================================================
+         AVISO DE CONTEÚDO PROVISÓRIO
+
+         Remover este bloco inteiro quando os textos definitivos
+         entrarem. Ele existe para que nenhum texto de preenchimento
+         chegue por engano à versão apresentada.
+         ================================================================ -->
+    <p class="provisorio">
+      Textos provisórios. O conteúdo definitivo precisa sair do referencial
+      teórico do trabalho, com as fontes citadas.
+    </p>
+
+    <!-- ================================================================
+         ACORDEÃO (RF06)
+
+         Cada <details> corresponde a uma linha da tabela
+         conteudo_educativo: o <summary> é a coluna "titulo" e o corpo é
+         a coluna "texto". A ordem na tela segue a coluna "ordem".
+
+         O atributo name="topico" repetido em todos faz o navegador
+         manter apenas um aberto por vez, sem JavaScript. Navegadores
+         antigos ignoram o atributo — o js/aprender.js cobre esse caso.
+         ================================================================ -->
+
+    <!-- ---------- 1. Conceito: arquitetura hostil ---------- -->
+    <details class="topico" name="topico">
+      <summary class="topico__titulo">
+        O que é arquitetura hostil
+        <svg class="topico__seta" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" aria-hidden="true">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </summary>
+
+      <div class="topico__corpo">
+        <p>
+          Explicar o conceito: intervenções no espaço público projetadas para
+          impedir permanência. Quem é afetado, e por que o desconforto é o
+          objetivo do projeto, não um efeito colateral.
+        </p>
+        <p class="topico__fonte">Base: SILVA (2021) — conferir a fonte primária.</p>
+      </div>
+    </details>
+
+    <!-- ---------- 2. Conceito: hospitalidade urbana ---------- -->
+    <details class="topico" name="topico">
+      <summary class="topico__titulo">
+        O que é hospitalidade urbana
+        <svg class="topico__seta" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" aria-hidden="true">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </summary>
+
+      <div class="topico__corpo">
+        <p>
+          Explicar o conceito oposto: elementos que convidam à permanência e
+          tornam a rua utilizável por quem passa o dia nela. Por que mapear o
+          que acolhe importa tanto quanto mapear o que afasta.
+        </p>
+        <p class="topico__fonte">Base: SEVERINI (2013) — conferir a fonte primária.</p>
+      </div>
+    </details>
+
+    <!-- ---------- 3. O argumento do aplicativo ---------- -->
+    <details class="topico" name="topico">
+      <summary class="topico__titulo">
+        Por que mapear
+        <svg class="topico__seta" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" aria-hidden="true">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </summary>
+
+      <div class="topico__corpo">
+        <p>
+          Explicar o que o mapa coletivo torna visível: um pino isolado passa
+          despercebido; a soma deles, num mapa, mostra um padrão. Mencionar o
+          que o app não é — não é canal de denúncia formal nem registro de
+          pessoas.
+        </p>
+      </div>
+    </details>
+
+    <!-- ---------- 4. Glossário: dispositivos hostis ----------
+         Os cinco itens são as subcategorias HOSTIL cadastradas no banco,
+         sem a opção genérica "Outro". -->
+    <details class="topico" name="topico">
+      <summary class="topico__titulo">
+        Como reconhecer o que afasta
+        <svg class="topico__seta" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" aria-hidden="true">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </summary>
+
+      <div class="topico__corpo">
+        <ul class="glossario">
+
+          <li class="glossario__item">
+            <span class="glossario__forma glossario__forma--hostil" aria-hidden="true"></span>
+            <div>
+              <h2 class="glossario__nome">Pino metálico</h2>
+              <p class="glossario__texto">Onde aparece e o que impede.</p>
+            </div>
+          </li>
+
+          <li class="glossario__item">
+            <span class="glossario__forma glossario__forma--hostil" aria-hidden="true"></span>
+            <div>
+              <h2 class="glossario__nome">Espeto</h2>
+              <p class="glossario__texto">Onde aparece e o que impede.</p>
+            </div>
+          </li>
+
+          <li class="glossario__item">
+            <span class="glossario__forma glossario__forma--hostil" aria-hidden="true"></span>
+            <div>
+              <h2 class="glossario__nome">Plano inclinado</h2>
+              <p class="glossario__texto">Onde aparece e o que impede.</p>
+            </div>
+          </li>
+
+          <li class="glossario__item">
+            <span class="glossario__forma glossario__forma--hostil" aria-hidden="true"></span>
+            <div>
+              <h2 class="glossario__nome">Muro de vidro</h2>
+              <p class="glossario__texto">Onde aparece e o que impede.</p>
+            </div>
+          </li>
+
+          <li class="glossario__item">
+            <span class="glossario__forma glossario__forma--hostil" aria-hidden="true"></span>
+            <div>
+              <h2 class="glossario__nome">Arranjo vegetal</h2>
+              <p class="glossario__texto">Onde aparece e o que impede.</p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </details>
+
+    <!-- ---------- 5. Glossário: elementos hospitaleiros ----------
+         ATENÇÃO para o texto do TCC: "Banco de descanso", "Arborização
+         viária" e "Iluminação adequada" vêm do referencial. "Bebedouro
+         público" e "Área sombreada" são complementos coerentes, mas não
+         confirmados na fonte primária — não atribuí-los à autora sem
+         conferir. -->
+    <details class="topico" name="topico">
+      <summary class="topico__titulo">
+        Como reconhecer o que acolhe
+        <svg class="topico__seta" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.5" aria-hidden="true">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </summary>
+
+      <div class="topico__corpo">
+        <ul class="glossario">
+
+          <li class="glossario__item">
+            <span class="glossario__forma glossario__forma--hospitaleiro" aria-hidden="true"></span>
+            <div>
+              <h2 class="glossario__nome">Banco de descanso</h2>
+              <p class="glossario__texto">Onde aparece e o que permite.</p>
+            </div>
+          </li>
+
+          <li class="glossario__item">
+            <span class="glossario__forma glossario__forma--hospitaleiro" aria-hidden="true"></span>
+            <div>
+              <h2 class="glossario__nome">Arborização viária</h2>
+              <p class="glossario__texto">Onde aparece e o que permite.</p>
+            </div>
+          </li>
+
+          <li class="glossario__item">
+            <span class="glossario__forma glossario__forma--hospitaleiro" aria-hidden="true"></span>
+            <div>
+              <h2 class="glossario__nome">Iluminação adequada</h2>
+              <p class="glossario__texto">Onde aparece e o que permite.</p>
+            </div>
+          </li>
+
+          <li class="glossario__item">
+            <span class="glossario__forma glossario__forma--hospitaleiro" aria-hidden="true"></span>
+            <div>
+              <h2 class="glossario__nome">Bebedouro público</h2>
+              <p class="glossario__texto">Onde aparece e o que permite.</p>
+            </div>
+          </li>
+
+          <li class="glossario__item">
+            <span class="glossario__forma glossario__forma--hospitaleiro" aria-hidden="true"></span>
+            <div>
+              <h2 class="glossario__nome">Área sombreada</h2>
+              <p class="glossario__texto">Onde aparece e o que permite.</p>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </details>
+
+  </main>
+
+  <nav class="barra" aria-label="Navegação principal">
+
+    <a class="barra__item" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/>
+      </svg>
+      Mapa
+    </a>
+
+    <a class="barra__item barra__item--destaque" href="registrar.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+      Mapear
+    </a>
+
+    <a class="barra__item" href="aprender.html" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+      Aprender
+    </a>
+
+  </nav>
+
+</div>
+
+<script src="js/aprender.js"></script>
+
+</body>
+</html>

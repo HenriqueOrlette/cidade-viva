@@ -34,8 +34,14 @@
   --hospitaleiro-inv: #5FD4A3; 
 
   /*FOCO DO TECLADO*/
-  --foco: #16181A;            
-  --foco-inv: #F2B705;        
+  --foco: #16181A;
+  --foco-inv: #F2B705;
+
+  /*LINHAS DIVISÓRIAS*/
+  /* Separam blocos. Não são o único indicador de estrutura — por isso
+     podem ser discretas, sem precisar do contraste exigido de texto. */
+  --linha: #DAD5C6;            /* sobre creme  */
+  --linha-inv: #3A3E44;        /* sobre carvão */
 
 
   /*TIPOGRAFIA*/

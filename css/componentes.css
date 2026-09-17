@@ -131,7 +131,7 @@
   gap: var(--e-2);
   padding: var(--e-2);
   background: var(--creme);
-  border-top: 1px solid #DAD5C6;
+  border-top: 1px solid var(--linha);
 
   /* Espaço extra embaixo, para a barra de gestos do iPhone não cobrir
      os botões. Em aparelhos sem essa área, resolve para zero. */
@@ -277,6 +277,9 @@
   gap: var(--e-1);
 }
 
+/* O atributo hidden do HTML aplica display:none pelo navegador, mas a
+   regra acima tem precedência e o anularia. Sem esta linha, o bloco da
+   descrição apareceria mesmo marcado como oculto. */
 .campo[hidden] {
   display: none;
 }
@@ -400,34 +403,34 @@ textarea.campo__controle {
   text-align: center;
   cursor: pointer;
 }
- 
+
 .foto__area svg {
   width: 32px;
   height: 32px;
 }
- 
+
 /* Retorno de toque próprio: o realce padrão do navegador está
    desligado no base.css. */
 .foto__area:active {
   transform: scale(0.99);
   background: #EFEBDE;
 }
- 
+
 /* O foco do teclado precisa ficar no label, já que o input está
    oculto — sem isso a navegação por Tab não mostraria nada. */
 .foto__campo:focus-visible + .foto__area {
   outline: 3px solid var(--foco);
   outline-offset: 2px;
 }
- 
+
 /* ==========================================================================
    PRÉVIA DA FOTOGRAFIA
- 
+
    Substitui a área tracejada depois que a pessoa escolhe a imagem.
    object-fit: cover recorta sem distorcer — fotos de rua vêm em
    proporções imprevisíveis.
    ========================================================================== */
- 
+
 .foto__previa {
   width: 100%;
   height: 220px;
@@ -436,20 +439,20 @@ textarea.campo__controle {
   border-radius: var(--raio);
   cursor: pointer;
 }
- 
+
 .foto__previa[hidden] {
   display: none;
 }
- 
- 
+
+
 /* ==========================================================================
    SELEÇÃO DE CATEGORIA (RF03)
- 
+
    Radio nativo escondido; o label inteiro vira o cartão tocável.
    :has() troca a borda quando o rádio correspondente é marcado —
    dispensa JavaScript só para o estado visual.
    ========================================================================== */
- 
+
 /* fieldset precisa de reset: o navegador lhe dá borda e recuo próprios.
    display:block porque <legend> não se comporta de forma confiável
    dentro de um contêiner flex. min-width:0 impede que o fieldset se
@@ -461,18 +464,18 @@ fieldset.campo {
   padding: 0;
   margin-inline: 0;
 }
- 
+
 fieldset.campo .campo__rotulo {
   display: block;
   padding: 0;
   margin-bottom: var(--e-1);
 }
- 
+
 .categoria__opcoes {
   display: flex;
   gap: var(--e-3);
 }
- 
+
 .categoria__cartao {
   flex: 1;
   display: flex;
@@ -485,60 +488,60 @@ fieldset.campo .campo__rotulo {
   border-radius: var(--raio);
   cursor: pointer;
 }
- 
+
 .categoria__forma {
   width: 40px;
   height: 40px;
   flex-shrink: 0;
 }
- 
+
 .categoria__forma--hostil {
   background: var(--hostil);
   transform: rotate(45deg);
   border-radius: 4px;
 }
- 
+
 .categoria__forma--hospitaleiro {
   background: var(--hospitaleiro);
   border-radius: 50%;
 }
- 
+
 .categoria__rotulo {
   font-weight: 600;
   font-size: 0.9375rem;
 }
- 
+
 /* Estado selecionado: borda mais grossa, na cor da categoria — reforço,
    nunca a única pista de qual está ativa. */
 .categoria__cartao--hostil:has(.categoria__input:checked) {
   border-width: 3px;
   border-color: var(--hostil);
 }
- 
+
 .categoria__cartao--hospitaleiro:has(.categoria__input:checked) {
   border-width: 3px;
   border-color: var(--hospitaleiro);
 }
- 
+
 /* Como o input fica oculto, o anel de foco do teclado precisa aparecer
    no cartão inteiro, não num elemento invisível. */
 .categoria__cartao:has(.categoria__input:focus-visible) {
   outline: 3px solid var(--foco);
   outline-offset: 2px;
 }
- 
+
 .categoria__cartao:active {
   transform: scale(0.98);
 }
- 
- 
+
+
 /* ==========================================================================
    LOCALIZAÇÃO (RF02 / RF07)
- 
+
    Faixa informativa: mostra o andamento da captura e, quando o Nominatim
    responde, o endereço legível.
    ========================================================================== */
- 
+
 .local {
   display: flex;
   align-items: center;
@@ -549,29 +552,29 @@ fieldset.campo .campo__rotulo {
   border: 2px solid var(--texto-suave);
   border-radius: var(--raio);
 }
- 
+
 .local__icone {
   width: 20px;
   height: 20px;
   flex-shrink: 0;
   color: var(--verde);
 }
- 
+
 .local__texto {
   font-size: 0.9375rem;
   line-height: 1.35;
 }
- 
- 
+
+
 /* ==========================================================================
    AVISO (RN01)
- 
+
    Barra lateral amarela em vez de fundo amarelo: o amarelo tem apenas
    1.65:1 sobre o creme e não serve como área de leitura. Como faixa
    sólida ao lado do texto escuro, chama atenção sem prejudicar o
    contraste.
    ========================================================================== */
- 
+
 .aviso {
   margin-top: var(--e-5);
   padding: var(--e-3);
@@ -582,16 +585,16 @@ fieldset.campo .campo__rotulo {
   font-size: 0.875rem;
   line-height: 1.45;
 }
- 
- 
+
+
 /* ==========================================================================
    AÇÕES DO FORMULÁRIO
    ========================================================================== */
- 
+
 .acoes {
   margin-top: var(--e-4);
 }
- 
+
 /* Dentro do formulário a faixa de status entra no fluxo da página, em vez
    de flutuar sobre o conteúdo como acontece no mapa. */
 .conteudo .faixa-status {
@@ -599,4 +602,210 @@ fieldset.campo .campo__rotulo {
   transform: none;
   max-width: none;
   margin-top: var(--e-3);
+}
+
+
+/* ==========================================================================
+   MARCA DE OBRIGATORIEDADE
+
+   Acompanha o rótulo do campo de descrição, que muda de opcional para
+   obrigatório conforme o tipo escolhido.
+   ========================================================================== */
+
+.campo__marca {
+  font-weight: 400;
+  color: var(--texto-suave);
+}
+
+
+/* ==========================================================================
+   HUB EDUCATIVO — SUPERFÍCIE ESCURA
+
+   Esta é a única tela com o fundo invertido. A inversão marca a mudança
+   de tom: aqui o app deixa de convocar e passa a explicar.
+
+   A barra de navegação continua clara, para que a navegação tenha a
+   mesma aparência nas três telas.
+   ========================================================================== */
+
+/* flex em coluna com o conteúdo esticando: sem isso, numa tela de
+   conteúdo curto a barra pararia no meio da página em vez de ficar na
+   base, porque o sticky respeita o fluxo do documento. */
+.app--escuro {
+  display: flex;
+  flex-direction: column;
+  background: var(--carvao);
+  color: var(--texto-inv);
+}
+
+.app--escuro .conteudo {
+  flex: 1;
+}
+
+.cabecalho__apoio--inv {
+  color: var(--texto-inv-suave);
+}
+
+
+/* ==========================================================================
+   AVISO DE CONTEÚDO PROVISÓRIO
+
+   Bloco temporário, removido quando os textos definitivos entrarem.
+   Usa o amarelo como preenchimento com texto escuro por cima — o único
+   uso que o contraste dele permite.
+   ========================================================================== */
+
+.provisorio {
+  margin-bottom: var(--e-5);
+  padding: var(--e-3);
+  background: var(--amarelo);
+  color: var(--texto);
+  border-radius: var(--raio);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   TÓPICO (ACORDEÃO)
+
+   Construído com <details> e <summary>, que já trazem de fábrica a
+   abertura por teclado e o anúncio correto em leitores de tela. Não há
+   JavaScript envolvido na abertura.
+   ========================================================================== */
+
+.topico {
+  border-bottom: 1px solid var(--linha-inv);
+}
+
+/* O cabeçalho clicável.
+
+   list-style e ::-webkit-details-marker removem o triângulo padrão, que
+   o navegador desenha em posição fixa e não acompanha o layout. O nosso
+   indicador é a seta em SVG, à direita. */
+.topico__titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--e-3);
+  min-height: var(--toque);
+  padding: var(--e-4) 0;
+
+  font-family: var(--fonte-texto);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--texto-inv);
+  cursor: pointer;
+  list-style: none;
+}
+
+.topico__titulo::-webkit-details-marker {
+  display: none;
+}
+
+.topico__titulo:active {
+  opacity: 0.7;
+}
+
+/* A seta aponta para baixo quando fechado e gira ao abrir. É o único
+   indicador puramente visual do estado — o <details> já informa
+   "expandido" ou "recolhido" ao leitor de tela por conta própria. */
+.topico__seta {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--texto-inv-suave);
+  transition: transform 0.15s ease;
+}
+
+.topico[open] .topico__seta {
+  transform: rotate(180deg);
+}
+
+.topico__corpo {
+  padding-bottom: var(--e-5);
+  color: var(--texto-inv);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+/* Marca a fonte a conferir. Alinhado ao tom secundário para não
+   competir com o texto principal. */
+.topico__fonte {
+  margin-top: var(--e-3);
+  color: var(--texto-inv-suave);
+  font-size: 0.8125rem;
+  font-style: italic;
+}
+
+
+/* ==========================================================================
+   GLOSSÁRIO
+
+   Lista de dispositivos dentro de um tópico. Repete as formas dos
+   marcadores do mapa — losango para hostil, círculo para acolhedor —
+   para que a pessoa reencontre aqui o mesmo código visual que verá lá.
+
+   As cores são obrigatoriamente as variantes -inv: sobre o carvão, o
+   carmim comum cairia para 2,39:1.
+   ========================================================================== */
+
+.glossario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--e-4);
+}
+
+.glossario__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--e-3);
+}
+
+/* Pequeno recuo no topo para a forma alinhar com a primeira linha do
+   nome, e não com o topo da caixa de texto. */
+.glossario__forma {
+  width: 14px;
+  height: 14px;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.glossario__forma--hostil {
+  background: var(--hostil-inv);
+  transform: rotate(45deg);
+  border-radius: 1px;
+}
+
+.glossario__forma--hospitaleiro {
+  background: var(--hospitaleiro-inv);
+  border-radius: 50%;
+}
+
+/* É um <h2> por ser um título de item dentro da estrutura da página,
+   mas visualmente precisa do peso de um rótulo, não de um título — daí
+   a fonte de texto no lugar da Anton. */
+.glossario__nome {
+  font-family: var(--fonte-texto);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--texto-inv);
+}
+
+.glossario__texto {
+  margin-top: var(--e-1);
+  color: var(--texto-inv-suave);
+  font-size: 0.875rem;
+  line-height: 1.45;
+}
+
+
+/* O anel de foco do teclado vem do base.css e fica amarelo dentro de
+   qualquer .superficie-escura. Só que a barra desta tela continua
+   clara: ali o amarelo teria 1,65:1 sobre o creme e sumiria. Esta regra
+   devolve o anel escuro dentro da barra. */
+.app--escuro .barra :focus-visible {
+  outline-color: var(--foco);
 }
