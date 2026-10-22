@@ -22,6 +22,10 @@
   <header class="cabecalho">
     <h1>Mapear</h1>
     <p class="cabecalho__apoio">Mostre o que você encontrou na rua.</p>
+    <p class="sessao" id="sessao" hidden>
+      Conectado como <strong id="sessao-nome"></strong>
+      <button class="sessao__sair" id="sair" type="button">Sair</button>
+    </p>
   </header>
 
   <main class="conteudo">
@@ -164,6 +168,9 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/cliente.js"></script>
 <script src="js/registrar.js"></script>
 
 </body>
