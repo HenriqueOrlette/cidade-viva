@@ -288,5 +288,14 @@ botaoPublicar.addEventListener('click', function () {
    8. INÍCIO
    -------------------------------------------------------------------------- */
 
-capturarLocalizacao();
-validar();
+document.getElementById('sair').addEventListener('click', cvSair);
+
+cvExigirLogin('registrar.html').then(function (usuario) {
+  if (!usuario) { return; }
+
+  document.getElementById('sessao-nome').textContent = usuario.nome;
+  document.getElementById('sessao').hidden = false;
+
+  capturarLocalizacao();
+  validar();
+});

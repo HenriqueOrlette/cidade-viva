@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>Cidade Viva — entrar</title>
+  <meta name="theme-color" content="#F7F4EC">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/componentes.css">
+</head>
+<body>
+
+<div class="app app--coluna">
+
+  <header class="cabecalho">
+    <h1>Entrar</h1>
+    <p class="cabecalho__apoio">Para mapear é preciso ter uma conta. Ver o mapa não exige.</p>
+  </header>
+
+  <main class="conteudo">
+
+    <!-- ABAS: Entrar / Criar conta. Padrão ARIA de abas: cada aba aponta
+         para seu painel (aria-controls), e só a aba ativa entra na ordem
+         do Tab; as setas do teclado trocam de aba. -->
+    <div class="abas" role="tablist" aria-label="Entrar ou criar conta">
+      <button class="aba" type="button" role="tab" id="aba-entrar"
+              aria-controls="painel-entrar" aria-selected="true">Entrar</button>
+      <button class="aba" type="button" role="tab" id="aba-criar"
+              aria-controls="painel-criar" aria-selected="false" tabindex="-1">Criar conta</button>
+    </div>
+
+    <!-- ENTRAR -->
+    <section class="painel" id="painel-entrar" role="tabpanel" aria-labelledby="aba-entrar">
+      <!-- novalidate: a validação é feita pelo entrar.js, com mensagens
+           em português e no mesmo estilo do resto do app. -->
+      <form id="form-entrar" novalidate>
+
+        <div class="campo">
+          <label class="campo__rotulo" for="entrar-email">E-mail</label>
+          <input class="campo__controle" id="entrar-email" name="email" type="email"
+                 autocomplete="email" autocapitalize="none" spellcheck="false">
+          <p class="campo__erro" id="entrar-email-erro" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label class="campo__rotulo" for="entrar-senha">Senha</label>
+          <input class="campo__controle" id="entrar-senha" name="senha" type="password"
+                 autocomplete="current-password">
+          <p class="campo__erro" id="entrar-senha-erro" hidden></p>
+        </div>
+
+        <!-- role="alert": o leitor de tela anuncia o erro assim que ele aparece. -->
+        <p class="campo__erro erro-geral" id="entrar-erro" role="alert" hidden></p>
+
+        <div class="acoes">
+          <button class="botao botao--primario" id="entrar-botao" type="submit">Entrar</button>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- CRIAR CONTA -->
+    <section class="painel" id="painel-criar" role="tabpanel" aria-labelledby="aba-criar" hidden>
+      <form id="form-criar" novalidate>
+
+        <div class="campo">
+          <label class="campo__rotulo" for="criar-nome">Nome de usuário</label>
+          <input class="campo__controle" id="criar-nome" name="nome" type="text"
+                 autocomplete="username" autocapitalize="none" spellcheck="false"
+                 aria-describedby="criar-nome-ajuda criar-nome-erro">
+          <p class="campo__ajuda" id="criar-nome-ajuda">
+            Aparece nos registros que você publicar. De 3 a 30 caracteres.
+          </p>
+          <p class="campo__erro" id="criar-nome-erro" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label class="campo__rotulo" for="criar-email">E-mail</label>
+          <input class="campo__controle" id="criar-email" name="email" type="email"
+                 autocomplete="email" autocapitalize="none" spellcheck="false"
+                 aria-describedby="criar-email-erro">
+          <p class="campo__erro" id="criar-email-erro" hidden></p>
+        </div>
+
+        <div class="campo">
+          <label class="campo__rotulo" for="criar-senha">Senha</label>
+          <input class="campo__controle" id="criar-senha" name="senha" type="password"
+                 autocomplete="new-password"
+                 aria-describedby="criar-senha-ajuda criar-senha-erro">
+          <p class="campo__ajuda" id="criar-senha-ajuda">Mínimo de 8 caracteres.</p>
+          <p class="campo__erro" id="criar-senha-erro" hidden></p>
+        </div>
+
+        <p class="campo__erro erro-geral" id="criar-erro" role="alert" hidden></p>
+
+        <div class="acoes">
+          <button class="botao botao--primario" id="criar-botao" type="submit">Criar conta</button>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- Mensagens que não são erro de campo (aviso de config, conta criada). -->
+    <p class="faixa-status" id="status" role="status" aria-live="polite" hidden></p>
+
+  </main>
+
+  <nav class="barra" aria-label="Navegação principal">
+
+    <a class="barra__item" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/>
+      </svg>
+      Mapa
+    </a>
+
+    <a class="barra__item barra__item--destaque" href="registrar.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">
+        <path d="M12 5v14M5 12h14"/>
+      </svg>
+      Mapear
+    </a>
+
+    <a class="barra__item" href="aprender.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5Z"/><path d="M8 7h7M8 11h7"/>
+      </svg>
+      Aprender
+    </a>
+
+  </nav>
+
+</div>
+
+<!-- Ordem importa: biblioteca, depois config, depois cliente, depois a tela. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/cliente.js"></script>
+<script src="js/entrar.js"></script>
+
+</body>
+</html>

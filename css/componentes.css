@@ -809,3 +809,96 @@ fieldset.campo .campo__rotulo {
 .app--escuro .barra :focus-visible {
   outline-color: var(--foco);
 }
+
+/* ==========================================================================
+   ABAS (entrar / criar conta)
+
+   Duas abas lado a lado. A ativa é preenchida; a inativa só tem contorno.
+   A diferença é de preenchimento, e não só de cor.
+   ========================================================================== */
+
+.abas {
+  display: flex;
+  gap: var(--e-2);
+  margin-bottom: var(--e-5);
+}
+
+.aba {
+  flex: 1;
+  min-height: var(--toque);
+  padding: var(--e-2) var(--e-3);
+  background: transparent;
+  border: 2px solid var(--verde);
+  border-radius: var(--raio);
+  color: var(--verde);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.aba[aria-selected="true"] {
+  background: var(--verde);
+  color: var(--texto-inv);
+}
+
+.aba:active {
+  transform: scale(0.97);
+}
+
+/* Garante que o atributo hidden esconda o painel mesmo que uma regra
+   futura defina display nele (mesma armadilha do .campo[hidden]). */
+.painel[hidden] {
+  display: none;
+}
+
+/* Erro que vale para o formulário todo, abaixo do último campo. */
+.erro-geral {
+  margin-top: var(--e-4);
+}
+
+
+/* ==========================================================================
+   SESSÃO (quem está conectado + sair)
+   ========================================================================== */
+
+.sessao {
+  margin-top: var(--e-1);
+  font-size: 0.875rem;
+  color: var(--texto-suave);
+}
+
+.sessao[hidden] {
+  display: none;
+}
+
+/* Botão com aparência de link, mas com a área de toque de 48px. */
+.sessao__sair {
+  min-height: var(--toque);
+  padding: 0 var(--e-2);
+  background: none;
+  border: 0;
+  color: var(--verde);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.sessao__sair:active {
+  opacity: 0.6;
+}
+
+
+/* ==========================================================================
+   TELA CURTA (entrar)
+
+   Em telas com pouco conteúdo, o .conteudo cresce e empurra a barra
+   inferior para o fim da tela, em vez de ela ficar no meio.
+   ========================================================================== */
+
+.app--coluna {
+  display: flex;
+  flex-direction: column;
+}
+
+.app--coluna .conteudo {
+  flex: 1;
+}
