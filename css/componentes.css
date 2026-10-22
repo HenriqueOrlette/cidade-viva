@@ -902,3 +902,130 @@ fieldset.campo .campo__rotulo {
 .app--coluna .conteudo {
   flex: 1;
 }
+
+/* ==========================================================================
+   ABAS SOBRE FUNDO ESCURO (aprender)
+
+   O verde-floresta das abas claras (#1B4D3E) quase some sobre o carvão.
+   Aqui a aba ativa é preenchida de creme e a inativa só tem contorno
+   claro: a diferença é de preenchimento, e não só de cor.
+   ========================================================================== */
+
+.app--escuro .aba {
+  border-color: var(--texto-inv-suave);
+  color: var(--texto-inv);
+}
+
+.app--escuro .aba[aria-selected="true"] {
+  background: var(--creme);
+  border-color: var(--creme);
+  color: var(--texto);
+}
+
+
+/* ==========================================================================
+   NOTÍCIAS
+
+   Filtro por tipo + lista de cartões, sobre o fundo escuro. O título é um
+   <h2> por ser título de item na estrutura da página, mas com peso de
+   rótulo, como o .glossario__nome.
+   ========================================================================== */
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--e-2);
+  margin-bottom: var(--e-4);
+}
+
+.filtro {
+  min-height: var(--toque);
+  padding: var(--e-2) var(--e-3);
+  background: transparent;
+  border: 2px solid var(--texto-inv-suave);
+  border-radius: var(--raio);
+  color: var(--texto-inv);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* Filtro ativo: preenchido. Inativo: só contorno. */
+.filtro[aria-pressed="true"] {
+  background: var(--texto-inv);
+  border-color: var(--texto-inv);
+  color: var(--texto);
+}
+
+.filtro:active {
+  transform: scale(0.97);
+}
+
+.noticias__status {
+  padding: var(--e-4) 0;
+  color: var(--texto-inv-suave);
+  font-size: 0.9375rem;
+}
+
+.noticias__status[hidden] {
+  display: none;
+}
+
+.noticia {
+  padding: var(--e-4) 0;
+  border-bottom: 1px solid var(--linha-inv);
+}
+
+.noticia__tipo {
+  color: var(--texto-inv-suave);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.noticia__h {
+  margin-top: var(--e-1);
+  font-family: var(--fonte-texto);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* O link ocupa o título inteiro e tem altura mínima de toque. */
+.noticia__link {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--e-2);
+  min-height: var(--toque);
+  padding: var(--e-2) 0;
+  color: var(--texto-inv);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.noticia__link:active {
+  opacity: 0.7;
+}
+
+.noticia__icone {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--texto-inv-suave);
+}
+
+.noticia__meta {
+  color: var(--texto-inv-suave);
+  font-size: 0.8125rem;
+}
+
+.noticia__resumo {
+  margin-top: var(--e-2);
+  color: var(--texto-inv);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}

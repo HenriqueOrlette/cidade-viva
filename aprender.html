@@ -34,6 +34,22 @@
 
   <main class="conteudo">
 
+    <!-- ABAS: Entender / Notícias. Mesmo padrão ARIA da tela de entrar:
+         cada aba aponta para seu painel (aria-controls), só a aba ativa
+         entra na ordem do Tab e as setas do teclado trocam de aba. -->
+    <div class="abas" role="tablist" aria-label="Entender ou ver notícias">
+      <button class="aba" type="button" role="tab" id="aba-entender"
+              aria-controls="painel-entender" aria-selected="true">Entender</button>
+      <button class="aba" type="button" role="tab" id="aba-noticias"
+              aria-controls="painel-noticias" aria-selected="false" tabindex="-1">Notícias</button>
+    </div>
+
+
+    <!-- ====================================================================
+         PAINEL 1 — ENTENDER
+         ==================================================================== -->
+    <section class="painel" id="painel-entender" role="tabpanel" aria-labelledby="aba-entender">
+
     <!-- ================================================================
          ACORDEÃO (RF06)
 
@@ -202,6 +218,34 @@
       </div>
     </details>
 
+    </section>
+
+
+    <!-- ====================================================================
+         PAINEL 2 — NOTÍCIAS
+
+         Os cartões vêm da tabela "noticia", cadastrada à mão no painel do
+         Supabase. O js/noticias.js busca e desenha a lista.
+         ==================================================================== -->
+    <section class="painel" id="painel-noticias" role="tabpanel" aria-labelledby="aba-noticias" hidden>
+
+      <!-- Filtro por tipo. Botões com aria-pressed: o leitor de tela anuncia
+           qual está ativo, e o visual (preenchido × só contorno) não
+           depende só de cor. data-tipo é o valor do enum "tipo_noticia". -->
+      <div class="filtros" role="group" aria-label="Filtrar por tipo">
+        <button class="filtro" type="button" data-tipo="TODOS" aria-pressed="true">Todas</button>
+        <button class="filtro" type="button" data-tipo="POLITICA_LEIS" aria-pressed="false">Política e leis</button>
+        <button class="filtro" type="button" data-tipo="CULTURA_DEBATE" aria-pressed="false">Cultura e debate</button>
+        <button class="filtro" type="button" data-tipo="ACAO_CONTRA" aria-pressed="false">Ações contra a arquitetura hostil</button>
+      </div>
+
+      <!-- Carregando, vazio ou erro. aria-live: o leitor de tela anuncia a mudança. -->
+      <p class="noticias__status" id="noticias-status" role="status" aria-live="polite" hidden></p>
+
+      <ul class="noticias" id="lista-noticias"></ul>
+
+    </section>
+
   </main>
 
   <nav class="barra" aria-label="Navegação principal">
@@ -231,7 +275,13 @@
 
 </div>
 
+<!-- Ordem importa: biblioteca, config, cliente (cria o acesso ao banco),
+     depois os scripts da tela. -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js"></script>
+<script src="js/config.js"></script>
+<script src="js/cliente.js"></script>
 <script src="js/aprender.js"></script>
+<script src="js/noticias.js"></script>
 
 </body>
 </html>
