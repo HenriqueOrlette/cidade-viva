@@ -259,33 +259,146 @@ function validar() {
   botaoPublicar.disabled = !completo;
 }
 
-
 /* --------------------------------------------------------------------------
    7. PUBLICAR
 
-   Por enquanto apenas confirma na tela. O envio ao Supabase — upload da
-   foto para o Storage e inserção na tabela "registro" — entra aqui depois.
+   Três etapas, nesta ordem:
+     1. reduz a foto no próprio celular (fotos de câmera têm vários MB);
+     2. envia a foto ao Storage (bucket "fotos") e pega o endereço público;
+     3. insere a linha na tabela "registro".
+
+   Se a etapa 2 funcionar e a 3 falhar, sobra uma foto sem registro no
+   Storage. É um desperdício pequeno e aceito no MVP: o RLS não permite
+   apagar arquivos, e o registro nunca aparece pela metade no mapa.
    -------------------------------------------------------------------------- */
 
-botaoPublicar.addEventListener('click', function () {
-  var dados = {
-    categoria: categoriaEscolhida(),
-    subcategoria_id: Number(campoSubcat.value),
-    descricao: campoDescricao.value.trim() || null,
-    latitude: estado.latitude,
-    longitude: estado.longitude,
-    endereco: estado.endereco
-  };
+/* Maior lado da foto depois de reduzida, em pixels. */
+var LADO_MAXIMO = 1600;
 
-  console.log('Pronto para enviar:', dados);
+/* Carrega a foto como imagem que o canvas consegue desenhar.
+   createImageBitmap com imageOrientation:'from-image' respeita a rotação
+   gravada pela câmera (EXIF); sem ela, fotos tiradas em pé podem ficar
+   deitadas. Navegadores que não aceitam essa opção caem no <img>. */
+function carregarImagem(arquivo) {
+  if (window.createImageBitmap) {
+    return createImageBitmap(arquivo, { imageOrientation: 'from-image' })
+      .catch(function () { return carregarPorTagImg(arquivo); });
+  }
+  return carregarPorTagImg(arquivo);
+}
 
-  faixaStatus.textContent = 'Está no mapa.';
-  faixaStatus.hidden = false;
-});
+function carregarPorTagImg(arquivo) {
+  return new Promise(function (resolve, reject) {
+    var url = URL.createObjectURL(arquivo);
+    var img = new Image();
+    img.onload = function () { URL.revokeObjectURL(url); resolve(img); };
+    img.onerror = function () { URL.revokeObjectURL(url); reject(new Error('imagem ilegível')); };
+    img.src = url;
+  });
+}
+
+/* Devolve uma Promise com um Blob JPEG de no máximo LADO_MAXIMO pixels no
+   lado maior. Nunca amplia fotos pequenas. */
+function reduzirFoto(arquivo) {
+  return carregarImagem(arquivo).then(function (imagem) {
+    var escala = Math.min(1, LADO_MAXIMO / Math.max(imagem.width, imagem.height));
+    var canvas = document.createElement('canvas');
+    canvas.width = Math.round(imagem.width * escala);
+    canvas.height = Math.round(imagem.height * escala);
+    canvas.getContext('2d').drawImage(imagem, 0, 0, canvas.width, canvas.height);
+
+    return new Promise(function (resolve, reject) {
+      canvas.toBlob(function (blob) {
+        blob ? resolve(blob) : reject(new Error('falha ao gerar o JPEG'));
+      }, 'image/jpeg', 0.82);
+    });
+  });
+}
+
+/* Nome único dentro da pasta da pessoa. A pasta com o id do usuário é o
+   que a política do Storage confere (ver storage-fotos.sql). */
+function caminhoDaFoto(usuarioId) {
+  var unico = (window.crypto && crypto.randomUUID)
+    ? crypto.randomUUID()
+    : Date.now() + '-' + Math.random().toString(36).slice(2);
+  return usuarioId + '/' + unico + '.jpg';
+}
+
+function mostrarStatus(texto) {
+  faixaStatus.textContent = texto;
+  faixaStatus.hidden = !texto;
+}
+
+/* Guarda quem está logado; preenchido na seção 8. */
+var usuarioAtual = null;
+
+async function publicar() {
+  /* Impede toque duplo: dois toques seguidos criariam dois registros. */
+  botaoPublicar.disabled = true;
+  botaoPublicar.textContent = 'Publicando…';
+  mostrarStatus('');
+
+  try {
+    /* 1. Reduz a foto. */
+    var foto = await reduzirFoto(campoFoto.files[0]);
+
+    /* 2. Envia ao Storage. */
+    var caminho = caminhoDaFoto(usuarioAtual.id);
+    var envio = await cvDb.storage.from('fotos').upload(caminho, foto, { contentType: 'image/jpeg' });
+    if (envio.error) { throw envio.error; }
+
+    var fotoUrl = cvDb.storage.from('fotos').getPublicUrl(caminho).data.publicUrl;
+
+    /* 3. Insere o registro.
+       A localização vai como texto no formato EWKT: "SRID=4326;POINT(lng lat)".
+       ATENÇÃO à ordem: no PostGIS o X (longitude) vem antes do Y (latitude). */
+    var e = estado.endereco || {};
+    var insercao = await cvDb.from('registro').insert({
+      autor_id: usuarioAtual.id,
+      categoria: categoriaEscolhida(),
+      subcategoria_id: Number(campoSubcat.value),
+      descricao: campoDescricao.value.trim() || null,
+      foto_url: fotoUrl,
+      localizacao: 'SRID=4326;POINT(' + estado.longitude + ' ' + estado.latitude + ')',
+      endereco_rua: e.rua || null,
+      endereco_numero: e.numero || null,
+      endereco_bairro: e.bairro || null,
+      endereco_cidade: e.cidade || null
+    });
+    if (insercao.error) { throw insercao.error; }
+
+    /* Sucesso: volta ao mapa, que já busca o ponto novo ao carregar. */
+    mostrarStatus('Publicado!');
+    window.location.href = 'index.html';
+  } catch (erro) {
+    console.error('Falha ao publicar:', erro);
+
+    /* 42501 é o código do PostgreSQL para "RLS negou". No Storage o
+       equivalente costuma vir com status 403 ou 401. Na prática, é sessão
+       vencida. */
+    var semPermissao = erro && (erro.code === '42501' || erro.statusCode === '403' ||
+      erro.statusCode === '401' || /row-level security|unauthorized/i.test(erro.message || ''));
+
+    mostrarStatus(semPermissao
+      ? 'Sua sessão expirou. Saia e entre de novo.'
+      : 'Não foi possível publicar. Verifique a conexão e tente de novo.');
+
+    botaoPublicar.textContent = 'Publicar no mapa';
+    validar();
+  }
+}
+
+botaoPublicar.addEventListener('click', publicar);
 
 
 /* --------------------------------------------------------------------------
    8. INÍCIO
+
+   Registrar exige login (o RLS do banco só aceita inserção de usuário
+   autenticado). Sem login, cvExigirLogin manda para entrar.html e a
+   pessoa volta para cá depois. A localização só é pedida depois de
+   confirmado o login, para não pedir permissão de GPS a quem vai ser
+   redirecionado.
    -------------------------------------------------------------------------- */
 
 document.getElementById('sair').addEventListener('click', cvSair);
@@ -293,6 +406,7 @@ document.getElementById('sair').addEventListener('click', cvSair);
 cvExigirLogin('registrar.html').then(function (usuario) {
   if (!usuario) { return; }
 
+  usuarioAtual = usuario;
   document.getElementById('sessao-nome').textContent = usuario.nome;
   document.getElementById('sessao').hidden = false;
 
